@@ -3,6 +3,8 @@ package com.learnrest.model;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -11,6 +13,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "users")
+@NamedQueries({
+    @NamedQuery(name = "User.findByUsername", query = "select u from User u where u.username = :username"),
+    @NamedQuery(name = "User.findByCredentials", query = "select u from User u where u.username = :username and u.password = :password")
+})
 public class User extends AbstractEntity {
 
     @Column(length = 255, nullable = false, unique = true)
