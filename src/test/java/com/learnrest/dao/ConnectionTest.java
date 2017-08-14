@@ -1,5 +1,6 @@
 package com.learnrest.dao;
 
+import com.learnrest.dao.connection.DatabaseConnection;
 import javax.persistence.EntityManager;
 import org.junit.Assert;
 import org.junit.Test;

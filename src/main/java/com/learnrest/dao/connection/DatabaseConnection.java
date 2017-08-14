@@ -1,4 +1,4 @@
-package com.learnrest.dao;
+package com.learnrest.dao.connection;
 
 import java.io.Serializable;
 import javax.persistence.EntityManager;
