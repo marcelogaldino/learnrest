@@ -93,6 +93,14 @@ public abstract class GenericDAO<T, K> implements DAO<T, K> {
     }
 
     @Override
+    public void deleteAll() {
+        List<T> objects = findAll();
+        for (T obj : objects) {
+            delete(obj);
+        }
+    }
+
+    @Override
     public EntityManager getEntityManager() {
         return DatabaseConnection.newInstance().getEntityManager();
     }

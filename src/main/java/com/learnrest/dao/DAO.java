@@ -23,6 +23,8 @@ public interface DAO<T, K> {
 
     List<T> findAll();
 
+    void deleteAll();
+    
     EntityManager getEntityManager();
 
     Class<T> getEntityClass();
