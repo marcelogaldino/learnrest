@@ -100,7 +100,14 @@ public class UserTest extends AbstractDAOTest {
     @After
     public void tearDown() {
         userDAO.deleteAll();
+
         User root = new User("root", "senha10", User.UserType.ROOT);
         userDAO.save(root);
+
+        User admin = new User("admin", "senha10", User.UserType.ADMIN);
+        userDAO.save(admin);
+
+        User fernando = new User("fernando", "senha10", User.UserType.USER);
+        userDAO.save(fernando);
     }
 }
