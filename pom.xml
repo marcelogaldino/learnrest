@@ -12,18 +12,29 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jersey.version>1.19.4</jersey.version>
         <weld.version>2.3.2.Final</weld.version>
         <hibernate.version>5.2.10.Final</hibernate.version>
         <derby.version>10.13.1.1</derby.version>
     </properties>
     
     <dependencies>
-        <!--Servlet API-->
+        <!--Jersey-->
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-server</artifactId>
+            <version>${jersey.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-servlet</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+        <!--        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>-->
         <!--Weld-->
         <dependency>
             <groupId>org.jboss.weld.servlet</groupId>

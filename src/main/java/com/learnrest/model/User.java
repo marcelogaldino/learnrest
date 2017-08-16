@@ -16,7 +16,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "users")
 @NamedQueries({
-    @NamedQuery(name = "User.findByUsername", query = "select u from User u where u.username = :username"),
+    @NamedQuery(name = "User.findByUsername", query = "select u from User u where u.username = :username")
+    ,
     @NamedQuery(name = "User.findByCredentials", query = "select u from User u where u.username = :username and u.password = :password")
 })
 public class User extends AbstractEntity {
@@ -97,7 +98,7 @@ public class User extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "User{" + "username=" + username + ", userType=" + userType + '}';
+        return "User{id="+ getId() + ", username=" + username + ", userType=" + userType + '}';
     }
 
     public enum UserType {

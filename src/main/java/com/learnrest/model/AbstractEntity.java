@@ -14,7 +14,7 @@ import javax.persistence.Temporal;
  * @author fernando
  */
 @MappedSuperclass
-public class AbstractEntity implements Serializable {
+public abstract class AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
