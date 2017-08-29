@@ -24,6 +24,11 @@ public class UserService {
     @Path("/")
     public Response getUsers() {
         List<User> users = userDAO.findAll();
+        
+        if(users == null || users.isEmpty()) {
+            return Response.status(200).entity("No data found.").build();
+        }
+        
         StringBuilder sb = new StringBuilder();
         for (User u : users) {
             sb.append(u.toString());

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TomcatSupportListener implements ServletContextListener, ServletRequestListener, HttpSessionListener {
 
-    private static final Logger logger = LoggerFactory.getLogger(TomcatSupportListener.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TomcatSupportListener.class);
     private static final String WELD_LISTENER_CLASS = "org.jboss.weld.environment.servlet.Listener";
 
     private ServletContextListener scListener;
@@ -29,14 +29,11 @@ public class TomcatSupportListener implements ServletContextListener, ServletReq
             scListener = (ServletContextListener) listener;
             srListener = (ServletRequestListener) listener;
             hsListener = (HttpSessionListener) listener;
-            logger.info("The TomcatSupportListener has been configured with a " + WELD_LISTENER_CLASS);
-        } catch (ClassNotFoundException e) {
-            logger.info("Not using the TomcatSupportListener as the weld listener(" + WELD_LISTENER_CLASS + ") is not defined on the classpath");
-        } catch (InstantiationException e) {
+            LOG.info("The TomcatSupportListener has been configured with a " + WELD_LISTENER_CLASS);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            LOG.error("Not using the TomcatSupportListener as the weld listener(" + WELD_LISTENER_CLASS + ") is not defined on the classpath");
             throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        } 
     }
 
     @Override

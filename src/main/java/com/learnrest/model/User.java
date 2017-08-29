@@ -1,5 +1,6 @@
 package com.learnrest.model;
 
+import com.learnrest.util.Criptography;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +17,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "users")
 @NamedQueries({
-    @NamedQuery(name = "User.findByUsername", query = "select u from User u where u.username = :username")
-    ,
+    @NamedQuery(name = "User.findByUsername", query = "select u from User u where u.username = :username"),
     @NamedQuery(name = "User.findByCredentials", query = "select u from User u where u.username = :username and u.password = :password")
 })
 public class User extends AbstractEntity {
@@ -37,13 +37,13 @@ public class User extends AbstractEntity {
 
     public User(String username, String password) {
         this.username = username;
-        this.password = password;
+        this.password = Criptography.encrypt(password);
         this.userType = UserType.USER;
     }
 
     public User(String username, String password, UserType userType) {
         this.username = username;
-        this.password = password;
+        this.password = Criptography.encrypt(password);
         this.userType = userType;
     }
 
@@ -60,7 +60,7 @@ public class User extends AbstractEntity {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = Criptography.encrypt(password);
     }
 
     public UserType getUserType() {
