@@ -4,6 +4,7 @@ import com.learnrest.dao.connection.DatabaseConnection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import org.slf4j.Logger;
 
 /**
  *
@@ -27,7 +28,8 @@ public abstract class GenericDAO<T, K> implements DAO<T, K> {
             getEntityManager().getTransaction().commit();
         } catch (Exception ex) {
             getEntityManager().getTransaction().rollback();
-            throw new DAOException("Error to persist: " + ex.getMessage(), ex);
+            getLogger().error("Error to persist: " + ex.getMessage());
+            throw new DAOException(ex);
         } finally {
             getEntityManager().close();
         }
@@ -41,7 +43,8 @@ public abstract class GenericDAO<T, K> implements DAO<T, K> {
             getEntityManager().getTransaction().commit();
         } catch (Exception ex) {
             getEntityManager().getTransaction().rollback();
-            throw new DAOException("Error to merge: " + ex.getMessage(), ex);
+            getLogger().error("Error to merge: " + ex.getMessage());
+            throw new DAOException(ex);
         } finally {
             getEntityManager().close();
         }
@@ -56,7 +59,8 @@ public abstract class GenericDAO<T, K> implements DAO<T, K> {
             getEntityManager().getTransaction().commit();
         } catch (Exception ex) {
             getEntityManager().getTransaction().rollback();
-            throw new DAOException("Error to delete: " + ex.getMessage(), ex);
+            getLogger().error("Error to delete: " + ex.getMessage());
+            throw new DAOException(ex);
         } finally {
             getEntityManager().close();
         }
@@ -71,7 +75,8 @@ public abstract class GenericDAO<T, K> implements DAO<T, K> {
             return entity;
         } catch (Exception ex) {
             getEntityManager().getTransaction().rollback();
-            throw new DAOException("Error to merge: " + ex.getMessage(), ex);
+            getLogger().error("Error to merge: " + ex.getMessage());
+            throw new DAOException(ex);
         } finally {
             getEntityManager().close();
         }
@@ -109,5 +114,8 @@ public abstract class GenericDAO<T, K> implements DAO<T, K> {
     public Class<T> getEntityClass() {
         return entityClass;
     }
+
+    @Override
+    public abstract Logger getLogger();
 
 }

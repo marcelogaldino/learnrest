@@ -2,6 +2,7 @@ package com.learnrest.dao;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import org.slf4j.Logger;
 
 /**
  *
@@ -28,4 +29,6 @@ public interface DAO<T, K> {
     EntityManager getEntityManager();
 
     Class<T> getEntityClass();
+    
+    Logger getLogger();
 }

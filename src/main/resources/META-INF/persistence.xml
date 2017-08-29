@@ -10,7 +10,7 @@
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
       <property name="javax.persistence.jdbc.password" value="senha10"/>
       <property name="hibernate.hbm2ddl.auto" value="update"/>
-      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.show_sql" value="false"/>
       <property name="hibernate.format_sql" value="true"/>
     </properties>
     <!--    validate: validate the schema, makes no changes to the database.

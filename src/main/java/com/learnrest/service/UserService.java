@@ -1,13 +1,11 @@
 package com.learnrest.service;
 
+import com.learnrest.dao.DAO;
 import com.learnrest.dao.UserDAO;
 import com.learnrest.model.User;
-import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.core.Response;
 
 /**
  *
@@ -15,26 +13,24 @@ import javax.ws.rs.core.Response;
  */
 @ManagedBean
 @Path("/user")
-public class UserService {
+public class UserService extends GenericCRUDService<User> {
 
     @Inject
     private UserDAO userDAO;
 
-    @GET
-    @Path("/")
-    public Response getUsers() {
-        List<User> users = userDAO.findAll();
-        
-        if(users == null || users.isEmpty()) {
-            return Response.status(200).entity("No data found.").build();
-        }
-        
-        StringBuilder sb = new StringBuilder();
-        for (User u : users) {
-            sb.append(u.toString());
-            sb.append("\n");
-        }
+    public UserService() {
+        super(User.class);
+    }
 
-        return Response.status(200).entity(sb.toString()).build();
+//    @GET
+//    @Path("/root")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public User getUser() {
+//        User root = userDAO.findByUsername("root");
+//        return root;
+//    }
+    @Override
+    public DAO getDao() {
+        return userDAO;
     }
 }

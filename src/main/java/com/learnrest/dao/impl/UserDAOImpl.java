@@ -7,6 +7,8 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -14,6 +16,8 @@ import javax.persistence.Query;
  */
 @ApplicationScoped
 public class UserDAOImpl extends GenericDAO<User, Long> implements UserDAO {
+
+    private static final Logger LOG = LoggerFactory.getLogger(UserDAOImpl.class);
 
     public UserDAOImpl() {
         super(User.class);
@@ -48,6 +52,11 @@ public class UserDAOImpl extends GenericDAO<User, Long> implements UserDAO {
         } else {
             return users.get(0);
         }
+    }
+
+    @Override
+    public Logger getLogger() {
+        return LOG;
     }
 
 }
