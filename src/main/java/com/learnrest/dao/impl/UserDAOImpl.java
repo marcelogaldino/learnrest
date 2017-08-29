@@ -4,6 +4,7 @@ import com.learnrest.dao.GenericDAO;
 import com.learnrest.dao.UserDAO;
 import com.learnrest.model.User;
 import java.util.List;
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 
@@ -11,6 +12,7 @@ import javax.persistence.Query;
  *
  * @author fernando
  */
+@ApplicationScoped
 public class UserDAOImpl extends GenericDAO<User, Long> implements UserDAO {
 
     public UserDAOImpl() {
