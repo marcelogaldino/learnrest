@@ -28,7 +28,7 @@ public abstract class AbstractEntity implements Serializable {
     public AbstractEntity() {
         created = new Date();
     }
-    
+
     public Long getId() {
         return id;
     }

@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -20,6 +21,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "User.findByUsername", query = "select u from User u where u.username = :username"),
     @NamedQuery(name = "User.findByCredentials", query = "select u from User u where u.username = :username and u.password = :password")
 })
+@XmlRootElement
 public class User extends AbstractEntity {
 
     @Column(length = 255, nullable = false, unique = true)
@@ -98,7 +100,7 @@ public class User extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "User{id="+ getId() + ", username=" + username + ", userType=" + userType + '}';
+        return "User{id=" + getId() + ", username=" + username + ", userType=" + userType + '}';
     }
 
     public enum UserType {
