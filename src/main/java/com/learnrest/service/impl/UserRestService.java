@@ -1,8 +1,10 @@
-package com.learnrest.service;
+package com.learnrest.service.impl;
 
 import com.learnrest.dao.DAO;
 import com.learnrest.dao.UserDAO;
 import com.learnrest.model.User;
+import com.learnrest.service.GenericCRUDRestService;
+import com.learnrest.service.UserService;
 import javax.annotation.ManagedBean;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
