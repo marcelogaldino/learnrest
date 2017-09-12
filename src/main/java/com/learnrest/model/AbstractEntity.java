@@ -44,7 +44,9 @@ public abstract class AbstractEntity implements Serializable {
     public void setCreated(Date created) {
         this.created = created;
     }
-
+    
+    public abstract void updateParameters(Object entity);
+    
     @Override
     public int hashCode() {
         int hash = 0;

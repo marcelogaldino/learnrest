@@ -16,6 +16,7 @@
         <jersey.version>1.19.4</jersey.version>
         <hibernate.version>5.2.10.Final</hibernate.version>
         <derby.version>10.13.1.1</derby.version>
+        <slf4j.version>1.7.25</slf4j.version>
     </properties>
     
     <dependencies>
@@ -59,7 +60,12 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.25</version>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
         
         <!--Apache Commons-->

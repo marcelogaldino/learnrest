@@ -103,6 +103,14 @@ public class User extends AbstractEntity {
         return "User{id=" + getId() + ", username=" + username + ", userType=" + userType + '}';
     }
 
+    @Override
+    public void updateParameters(Object entity) {
+        final User other = (User) entity;
+        this.setUsername(other.username);
+        this.setPassword(other.password);
+        this.setUserType(other.userType);
+    }
+
     public enum UserType {
         ROOT, ADMIN, USER;
     }
