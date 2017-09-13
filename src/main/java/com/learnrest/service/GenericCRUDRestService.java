@@ -50,7 +50,7 @@ public abstract class GenericCRUDRestService<T extends AbstractEntity> implement
         if (objects == null || objects.isEmpty()) {
             return Response.noContent().build();
         }
-        return Response.ok().entity(objects).build();
+        return Response.ok(listToGenericEntity(objects)).build();
     }
 
     @POST

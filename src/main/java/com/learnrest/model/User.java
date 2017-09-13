@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "User.findByUsername", query = "select u from User u where u.username = :username"),
     @NamedQuery(name = "User.findByCredentials", query = "select u from User u where u.username = :username and u.password = :password")
 })
-@XmlRootElement
+@XmlRootElement(name = "user")
 public class User extends AbstractEntity {
 
     @Column(length = 255, nullable = false, unique = true)

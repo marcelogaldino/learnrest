@@ -1,6 +1,9 @@
 package com.learnrest.service;
 
 import com.learnrest.dao.DAO;
+import com.learnrest.model.AbstractEntity;
+import java.util.List;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 
@@ -9,7 +12,7 @@ import org.slf4j.Logger;
  * @author fernando
  * @param <T>
  */
-public interface CRUDRestService<T> {
+public interface CRUDRestService<T extends AbstractEntity> {
     
     Response getById(Long id);
     
@@ -20,6 +23,8 @@ public interface CRUDRestService<T> {
     Response update(T entity, Long id);
     
     Response delete(Long id);
+    
+    GenericEntity listToGenericEntity(List<T> list);
     
     DAO getDao();
     
