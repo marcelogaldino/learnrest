@@ -1,5 +1,6 @@
 package com.learnrest.dao;
 
+import com.learnrest.model.AbstractEntity;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.slf4j.Logger;
@@ -10,7 +11,7 @@ import org.slf4j.Logger;
  * @param <T> EntityClass to manage
  * @param <K> Datatype from ID
  */
-public interface DAO<T, K> {
+public interface DAO<T extends AbstractEntity, K> {
 
     void save(T entity);
 

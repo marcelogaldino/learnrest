@@ -1,6 +1,7 @@
 package com.learnrest.dao;
 
 import com.learnrest.dao.connection.DatabaseConnection;
+import com.learnrest.model.AbstractEntity;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -12,7 +13,7 @@ import org.slf4j.Logger;
  * @param <T> EntityClass to manage
  * @param <K> Datatype from ID
  */
-public abstract class GenericDAO<T, K> implements DAO<T, K> {
+public abstract class GenericDAO<T extends AbstractEntity, K> implements DAO<T, K> {
 
     private final Class<T> entityClass;
 
@@ -26,9 +27,10 @@ public abstract class GenericDAO<T, K> implements DAO<T, K> {
             getEntityManager().getTransaction().begin();
             getEntityManager().persist(entity);
             getEntityManager().getTransaction().commit();
-            getLogger().debug("New {} object saved: {}", entityClass.getSimpleName(), entity);
+            getLogger().info("New {} object saved: {}", entityClass.getSimpleName(), entity);
         } catch (Exception ex) {
             getEntityManager().getTransaction().rollback();
+            getEntityManager().close();
             getLogger().error("Error to persist: {}", ex.getMessage());
             throw new DAOException(ex);
         } finally {
@@ -42,9 +44,10 @@ public abstract class GenericDAO<T, K> implements DAO<T, K> {
             getEntityManager().getTransaction().begin();
             getEntityManager().merge(entity);
             getEntityManager().getTransaction().commit();
-            getLogger().debug("{} object updated: {}", entityClass.getSimpleName(), entity);
+            getLogger().info("{} object updated: {}", entityClass.getSimpleName(), entity);
         } catch (Exception ex) {
             getEntityManager().getTransaction().rollback();
+            getEntityManager().close();
             getLogger().error("Error to merge: {}", ex.getMessage());
             throw new DAOException(ex);
         } finally {
@@ -59,9 +62,10 @@ public abstract class GenericDAO<T, K> implements DAO<T, K> {
             entity = getEntityManager().merge(entity);
             getEntityManager().remove(entity);
             getEntityManager().getTransaction().commit();
-            getLogger().debug("{} object deleted: {}", entityClass.getSimpleName(), entity);
+            getLogger().info("{} object deleted: {}", entityClass.getSimpleName(), entity);
         } catch (Exception ex) {
             getEntityManager().getTransaction().rollback();
+            getEntityManager().close();
             getLogger().error("Error to delete: {}", ex.getMessage());
             throw new DAOException(ex);
         } finally {
@@ -75,10 +79,11 @@ public abstract class GenericDAO<T, K> implements DAO<T, K> {
             getEntityManager().getTransaction().begin();
             entity = getEntityManager().merge(entity);
             getEntityManager().getTransaction().commit();
-            getLogger().debug("{} object updated: {}", entityClass.getSimpleName(), entity);
+            getLogger().info("{} object merged: {}", entityClass.getSimpleName(), entity);
             return entity;
         } catch (Exception ex) {
             getEntityManager().getTransaction().rollback();
+            getEntityManager().close();
             getLogger().error("Error to merge: {}", ex.getMessage());
             throw new DAOException(ex);
         } finally {
@@ -88,13 +93,13 @@ public abstract class GenericDAO<T, K> implements DAO<T, K> {
 
     @Override
     public T findById(K id) {
-        getLogger().debug("Searching {} object by id {}", entityClass.getSimpleName(), id);
+        getLogger().info("Searching {} object by id {}", entityClass.getSimpleName(), id);
         return getEntityManager().find(entityClass, id);
     }
 
     @Override
     public List<T> findAll() {
-        getLogger().debug("Searching all {} objects", entityClass.getSimpleName());
+        getLogger().info("Searching all {} objects", entityClass.getSimpleName());
         StringBuilder sb = new StringBuilder();
         sb.append("select obj from ");
         sb.append(entityClass.getSimpleName());
@@ -105,7 +110,7 @@ public abstract class GenericDAO<T, K> implements DAO<T, K> {
 
     @Override
     public void deleteAll() {
-        getLogger().debug("Deleting all {} objects.", entityClass.getSimpleName());
+        getLogger().info("Deleting all {} objects.", entityClass.getSimpleName());
         List<T> objects = findAll();
         for (T obj : objects) {
             delete(obj);

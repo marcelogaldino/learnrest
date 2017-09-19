@@ -6,9 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import org.jglue.cdiunit.AdditionalClasses;
 import org.jglue.cdiunit.CdiRunner;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -24,6 +22,7 @@ public class UserTest extends AbstractDAOTest {
     private UserDAO userDAO;
 
     @Test
+    @Override
     public void cdiInjectionTest() {
         Assert.assertNotNull(userDAO);
     }
@@ -31,30 +30,39 @@ public class UserTest extends AbstractDAOTest {
     @Test
     @Override
     public void saveTest() {
-        User root = new User("root", "senha10");
-        userDAO.save(root);
+        User toSave = new User("tosave", "tosave");
+        userDAO.save(toSave);
 
-        root = userDAO.findByUsername(root.getUsername());
-        Assert.assertNotNull(root);
-        Assert.assertNotNull(root.getId());
+        User saved = userDAO.findByUsername(toSave.getUsername());
+        Assert.assertNotNull(saved);
+        Assert.assertNotNull(saved.getId());
     }
 
     @Test
     @Override
     public void updateTest() {
-        User admin = new User("admin", "senha10");
-        userDAO.update(admin);
+        User user = new User("toUpdate", "toUpdate");
+        userDAO.save(user);
 
-        admin = userDAO.findByUsername(admin.getUsername());
-        Assert.assertNotNull(admin);
-        Assert.assertNotNull(admin.getId());
+        User userSaved = userDAO.findByUsername(user.getUsername());
+        Assert.assertNotNull(userSaved);
+        Assert.assertNotNull(userSaved.getId());
+
+        User change = new User("toChange", "toChange");
+
+        userSaved.updateParameters(change);
+        userDAO.update(userSaved);
+
+        userSaved = userDAO.findByUsername(change.getUsername());
+        Assert.assertNotNull(userSaved);
+        Assert.assertNotNull(userSaved.getId());
+        Assert.assertEquals(userSaved, change);
     }
 
     @Test
     @Override
     public void mergeTest() {
-        User fernando = new User("fernando", "senha10");
-        fernando = userDAO.merge(fernando);
+        User fernando = userDAO.merge(new User("fernando", "fernando"));
         Assert.assertNotNull(fernando);
         Assert.assertNotNull(fernando.getId());
     }
@@ -62,21 +70,20 @@ public class UserTest extends AbstractDAOTest {
     @Test
     @Override
     public void deleteTest() {
-        User alice = new User("alice", "papailindo");
-        alice = userDAO.merge(alice);
-        Assert.assertNotNull(alice.getId());
+        User toDelete = new User("delete", "todelete");
+        toDelete = userDAO.merge(toDelete);
+        Assert.assertNotNull(toDelete.getId());
 
-        userDAO.delete(alice);
+        userDAO.delete(toDelete);
 
-        alice = userDAO.findByUsername(alice.getUsername());
-        Assert.assertNull(alice);
+        toDelete = userDAO.findByUsername(toDelete.getUsername());
+        Assert.assertNull(toDelete);
     }
 
     @Test
     @Override
     public void findByIdTest() {
-        User alice = new User("alice", "papailindo");
-        alice = userDAO.merge(alice);
+        User alice = userDAO.merge(new User("alice", "alice"));
         alice = userDAO.findById(alice.getId());
         Assert.assertNotNull(alice);
     }
@@ -84,30 +91,11 @@ public class UserTest extends AbstractDAOTest {
     @Test
     @Override
     public void findAllTest() {
-        User alice = new User("alice", "papailindo");
-        userDAO.save(alice);
+        User lessOne = new User("lessone", "lessone");
+        userDAO.save(lessOne);
 
         List<User> users = userDAO.findAll();
         Assert.assertNotNull(users);
         Assert.assertTrue(users.size() >= 1);
-    }
-
-    @Before
-    public void setUp() {
-        userDAO.deleteAll();
-    }
-
-    @After
-    public void tearDown() {
-        userDAO.deleteAll();
-
-        User root = new User("root", "senha10", User.UserType.ROOT);
-        userDAO.save(root);
-
-        User admin = new User("admin", "senha10", User.UserType.ADMIN);
-        userDAO.save(admin);
-
-        User fernando = new User("fernando", "senha10", User.UserType.USER);
-        userDAO.save(fernando);
     }
 }

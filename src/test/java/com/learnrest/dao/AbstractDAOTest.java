@@ -6,6 +6,8 @@ package com.learnrest.dao;
  */
 public abstract class AbstractDAOTest {
 
+    public abstract void cdiInjectionTest();
+    
     public abstract void saveTest();
 
     public abstract void updateTest();

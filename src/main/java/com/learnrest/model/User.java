@@ -106,9 +106,9 @@ public class User extends AbstractEntity {
     @Override
     public void updateParameters(Object entity) {
         final User other = (User) entity;
-        this.setUsername(other.username);
-        this.setPassword(other.password);
-        this.setUserType(other.userType);
+        this.username = other.username;
+        this.password = other.password;
+        this.userType = other.userType;
     }
 
     public enum UserType {
